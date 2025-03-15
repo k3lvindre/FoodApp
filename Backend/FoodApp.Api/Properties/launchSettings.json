@@ -1,4 +1,6 @@
-﻿{
+﻿//Automatically called by WebApplicationBuilder from WebApplication.CreateBuilder(args);
+//by looking at folder properties/launchSettings.json 
+{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
     "http": {

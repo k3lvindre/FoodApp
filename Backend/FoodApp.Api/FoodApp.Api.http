@@ -1,6 +1,6 @@
-@FoodApp.Api_HostAddress = http://localhost:5114
+@FoodApp.Api_HostAddress = http://localhost:5114/api
 
-GET {{FoodApp.Api_HostAddress}}/weatherforecast/
+GET {{FoodApp.Api_HostAddress}}/products/
 Accept: application/json
 
 ###
