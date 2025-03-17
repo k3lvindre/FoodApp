@@ -17,6 +17,27 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
             await base.SaveChangesAsync(cancellationToken);
             return true;
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            // Configure ProductCategory as a value object
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.OwnsOne(p => p.Category, (category) =>
+                {
+                    category.Property(c => c.Id).HasColumnName("CategoryId");
+                    category.Property(c => c.Name).HasColumnName("CategoryName");
+                });
+
+                entity.OwnsOne(p => p.Price, (price) =>
+                {
+                    price.Property(p => p.Value).HasColumnName("Price").HasPrecision(5);
+                    price.Property(p => p.CurrencyCode).HasColumnName("Currency");
+                }); ;
+            });
+        }
     }
 }
    

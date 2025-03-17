@@ -2,7 +2,7 @@
 
 namespace FoodApp.Domain.Products
 {
-    public struct ProductCategory : IValueObject
+    public class ProductCategory : IValueObject
     {
         public static readonly ProductCategory Chizlog = new (1, "Chizlog");
         public static readonly ProductCategory GCash = new (2, "GCash");
@@ -18,9 +18,13 @@ namespace FoodApp.Domain.Products
         }
 
         public static ProductCategory FromId(int id)
-        {
-            return GetAll().FirstOrDefault(x => x.Id == id);
-        }
+            => id switch
+            {
+                1 => Chizlog,
+                2 => GCash,
+                3 => Print,
+                _ => throw new KeyNotFoundException($"Product category with id {id} not found.")
+            };
 
         private static IEnumerable<ProductCategory> GetAll()
         {

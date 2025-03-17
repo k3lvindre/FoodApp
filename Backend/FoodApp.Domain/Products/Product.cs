@@ -5,11 +5,15 @@ namespace FoodApp.Domain.Products
 {
     public class Product : IAggregateRoot
     {
-        public ProductId Id { get; private set; }
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public ProductCategory Category { get; private set; }
         public Amount Price { get; private set; }
         public int Stock { get; private set; }
+
+        // Use for EF core
+        public Product()
+        { }
 
         public Product(string name, ProductCategory category, Amount price, int stock)
         {
