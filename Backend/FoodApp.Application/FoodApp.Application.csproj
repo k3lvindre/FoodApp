@@ -6,4 +6,18 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Scrutor" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Products\Query\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FoodApp.Domain\FoodApp.Domain.csproj" />
+    <ProjectReference Include="..\FoodApp.Infrastructure\FoodApp.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

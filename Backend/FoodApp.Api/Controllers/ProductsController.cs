@@ -1,17 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Reflection;
-using System;
-using Microsoft.Extensions.FileSystemGlobbing;
-using Microsoft.AspNetCore.Http.HttpResults;
-using System.Collections.Generic;
-using static System.Collections.Specialized.BitVector32;
-using System.Xml.Linq;
-using static System.Net.WebRequestMethods;
-using System.Security.Cryptography.Xml;
-using System.Runtime.InteropServices;
-using Microsoft.Extensions.Options;
-using System.Buffers.Text;
+﻿using FoodApp.Application.Products.Command;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FoodApp.Api.Controllers
 {
@@ -122,10 +111,24 @@ namespace FoodApp.Api.Controllers
     [Route("api/[controller]")] 
     public class ProductsController : ControllerBase
     {
+        private readonly IMediator _mediator;
+
+        public ProductsController(IMediator mediator)
+        {
+            _mediator = mediator;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
             return Ok("working");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(CreateProductCommand command)
+        {
+            await _mediator.Send(command);
+            return Created();
         }
     }
 }

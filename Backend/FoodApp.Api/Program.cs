@@ -30,6 +30,7 @@
 //}
 
 
+using FoodApp.Application;
 using FoodApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -37,6 +38,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 

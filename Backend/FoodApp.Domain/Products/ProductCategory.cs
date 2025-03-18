@@ -26,7 +26,7 @@ namespace FoodApp.Domain.Products
                 _ => throw new KeyNotFoundException($"Product category with id {id} not found.")
             };
 
-        private static IEnumerable<ProductCategory> GetAll()
+        public static IEnumerable<ProductCategory> GetAll()
         {
             yield return Chizlog;
             yield return GCash;
