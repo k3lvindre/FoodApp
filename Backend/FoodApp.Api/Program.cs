@@ -40,9 +40,42 @@ builder.Services.AddControllers();
 builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddApplicationServices(builder.Configuration);
 
+// Add CORS services and configure the policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy( builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+    //or
+    //options.AddPolicy("AllowAll", builder =>
+    //{
+    //    builder.AllowAnyOrigin()
+    //           .AllowAnyMethod()
+    //           .AllowAnyHeader();
+    //});
+    //then add middleware like 
+    //app.UseCors("AllowAll");
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex.Message);
+    }
+});
+
+app.UseCors();
 
 //use for api controllers and routing because it has no view or not an mvc use UseMVC, UseEndpoints, or UseMvcWithDefaultRoute for mvc
 app.MapControllers();
