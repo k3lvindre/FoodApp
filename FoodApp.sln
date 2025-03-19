@@ -28,6 +28,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FoodApp", "FoodApp", "{3A673B15-A19D-45EB-8FCC-1232ACFCA8B5}"
+	ProjectSection(SolutionItems) = preProject
+		Mobile\FoodApp\.gitignore = Mobile\FoodApp\.gitignore
+		Mobile\FoodApp\App.js = Mobile\FoodApp\App.js
+		Mobile\FoodApp\app.json = Mobile\FoodApp\app.json
+		Mobile\FoodApp\babel.config.js = Mobile\FoodApp\babel.config.js
+		Mobile\FoodApp\package-lock.json = Mobile\FoodApp\package-lock.json
+		Mobile\FoodApp\package.json = Mobile\FoodApp\package.json
+		Mobile\FoodApp\README.md = Mobile\FoodApp\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +78,7 @@ Global
 		{59FB310B-2DFD-4BB5-BF84-C49FDF3AE60A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{D4ACA863-7E9F-4779-9AD3-B99A7ED751B4} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{A2B1B511-1BCB-45D0-BFC0-66C5C4F1A34F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{3A673B15-A19D-45EB-8FCC-1232ACFCA8B5} = {0B05371A-5414-4E30-9D0D-F18B76FC7C91}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A8342A67-1221-48CC-B876-1C5B337B8071}
