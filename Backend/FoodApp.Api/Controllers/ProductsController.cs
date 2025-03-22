@@ -1,4 +1,5 @@
 ﻿using FoodApp.Application.Products.Command;
+using FoodApp.Application.Products.Query.Categories.GetProductCategories;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -108,7 +109,7 @@ namespace FoodApp.Api.Controllers
 
     [ApiController]
     //ApiController attribute makes this attribute routing a requirement
-    [Route("api/[controller]")] 
+    [Route("api/[controller]")]
     public class ProductsController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -130,5 +131,9 @@ namespace FoodApp.Api.Controllers
             await _mediator.Send(command);
             return Created();
         }
+
+        [HttpGet("categories")]
+        public async Task<IActionResult> GetCategories()
+            => Ok(await _mediator.Send(new GetProductCategoriesQuery()));
     }
 }

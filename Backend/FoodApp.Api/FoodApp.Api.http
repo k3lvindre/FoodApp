@@ -4,6 +4,10 @@
 GET {{FoodApp.Api_HostAddress}}/products/
 Accept: application/json
 
+### GET
+GET {{FoodApp.Api_HostAddress}}/products/categories
+Accept: application/json
+
 ### POST request to create a new product
 POST {{FoodApp.Api_HostAddress}}/products/
 Content-Type: application/json

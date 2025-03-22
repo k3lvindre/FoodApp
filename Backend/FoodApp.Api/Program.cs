@@ -63,6 +63,8 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+
+// example of manually adding middleware
 app.Use(async (context, next) =>
 {
     try

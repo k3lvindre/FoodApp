@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Products\Query\" />
+    <ProjectReference Include="..\FoodApp.Domain\FoodApp.Domain.csproj" />
+    <ProjectReference Include="..\FoodApp.Infrastructure\FoodApp.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FoodApp.Domain\FoodApp.Domain.csproj" />
-    <ProjectReference Include="..\FoodApp.Infrastructure\FoodApp.Infrastructure.csproj" />
+    <Folder Include="Products\DataTransferObjects\" />
   </ItemGroup>
 
 </Project>
