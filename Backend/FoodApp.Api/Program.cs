@@ -63,6 +63,19 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex.Message);
+    }
+});
+
+app.UseCors();
 
 // example of manually adding middleware
 app.Use(async (context, next) =>
