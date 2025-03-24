@@ -1,3 +1,4 @@
+using FoodApp.Domain.Orders;
 using FoodApp.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,7 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
 
         // Define DbSets for your entities
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
        
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default, bool publishDomainEvent = false)
         {
@@ -36,6 +38,15 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                     price.Property(p => p.Value).HasColumnName("Price").HasPrecision(5);
                     price.Property(p => p.CurrencyCode).HasColumnName("Currency");
                 }); ;
+            });
+
+            // Configure ProductCategory as a value object
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.OwnsMany(o => o.OrderItems, (orderItem) =>
+                {
+                    orderItem.Property(o => o.Id).HasColumnName("OrderItemId");
+                });
             });
         }
     }

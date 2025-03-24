@@ -10,8 +10,4 @@
     <ProjectReference Include="..\FoodApp.Shared\FoodApp.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Orders\" />
-  </ItemGroup>
-
 </Project>

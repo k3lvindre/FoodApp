@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Orders\DataTransferObjects\" />
     <Folder Include="Products\DataTransferObjects\" />
   </ItemGroup>
 
