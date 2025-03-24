@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 export default function AddProduct() {
   const [name, setName] = useState('');
   const [categoryId, setCategoryId] = useState(1);
   const [price, setPrice] = useState(0);
   const [stock, setStock] = useState(0);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('http://192.168.254.100:5114/api/products/categories');
+        const data = await response.json();
+        setCategories(data);
+      } catch (error) {
+        Alert.alert('Error', 'Failed to fetch categories');
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
 
   const handleAddProduct = async () => {
     if (!name || !categoryId || !price || !stock) {
@@ -21,7 +38,7 @@ export default function AddProduct() {
     };
 
     try {
-      const response = await fetch('http://localhost:5114/api/products', {
+      const response = await fetch('http://192.168.254.100:5114/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -47,13 +64,16 @@ export default function AddProduct() {
         value={name}
         onChangeText={setName}
       />
-      <Text style={styles.label}>Category ID</Text>
-      <TextInput
+      <Text style={styles.label}>Category</Text>
+      <Picker
+        selectedValue={categoryId}
         style={styles.input}
-        value={String(categoryId)}
-        onChangeText={(text) => setCategoryId(Number(text))}
-        keyboardType="numeric"
-      />
+        onValueChange={(itemValue) => setCategoryId(itemValue)}
+      >
+        {categories.map((category) => (
+          <Picker.Item key={category.id} label={category.name} value={category.id} />
+        ))}
+      </Picker>
       <Text style={styles.label}>Price</Text>
       <TextInput
         style={styles.input}
