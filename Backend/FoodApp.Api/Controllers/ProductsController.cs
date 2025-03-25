@@ -121,9 +121,7 @@ namespace FoodApp.Api.Controllers
 
         [HttpGet]
         public IActionResult Get()
-        {
-            return Ok("working");
-        }
+            => Ok("working");
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductCommand command)
@@ -132,8 +130,8 @@ namespace FoodApp.Api.Controllers
             return Created();
         }
 
-        [HttpGet("categories")]
-        public async Task<IActionResult> GetCategories()
-            => Ok(await _mediator.Send(new GetProductCategoriesQuery()));
+        [HttpGet]
+        public async Task<IActionResult> Get([FromQuery] int categoryId)
+            => Ok(await _mediator.Send(new GetProductsByCategoryIdQuery(categoryId)));
     }
 }
