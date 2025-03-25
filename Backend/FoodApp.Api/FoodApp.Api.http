@@ -2,7 +2,6 @@
 
 ### GET
 GET {{FoodApp.Api_HostAddress}}/ProductCategories/1/products
-Accept: application/json
 
 ### GET
 GET {{FoodApp.Api_HostAddress}}/ProductCategories
@@ -43,3 +42,6 @@ Content-Type: application/json
   }
 }
 
+### GET
+GET {{FoodApp.Api_HostAddress}}/orders?pageNumber=1&pageSize=10
+Accept: application/json

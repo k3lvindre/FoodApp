@@ -1,4 +1,5 @@
 ﻿using FoodApp.Application.Orders.Command.CreateOrder;
+using FoodApp.Application.Orders.Query.GetOrdersWithPagination;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,8 @@ namespace FoodApp.Api.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok();
-        }
+        public async Task<IActionResult> Get([FromQuery] GetOrdersWithPaginationQuery request)
+            => Ok(await _mediator.Send(request));
 
         [HttpPost]
         public async Task<IActionResult> Post(CreateOrderCommand request)
