@@ -12,7 +12,7 @@ export default function AddProduct() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://192.168.254.100:5114/api/products/categories');
+        const response = await fetch('http://192.168.254.100:5114/api/productcategories');
         const data = await response.json();
         setCategories(data);
       } catch (error) {
