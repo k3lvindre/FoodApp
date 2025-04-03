@@ -23,14 +23,16 @@ namespace FoodApp.Application.Orders.Query.GetOrdersWithPagination
                     .Take((int)request.PageSize)
                     .ToListAsync(cancellationToken);
 
+            var count = await _foodAppDbContext.Orders.CountAsync(cancellationToken);
+
             if (orders.Count == 0)
             {
                 return new OrdersWithPaginationResponseDto
                 {
                     PageNumber = request.PageNumber ?? 1,
                     PageSize = request.PageSize ?? 50,
-                    TotalCount = await _foodAppDbContext.Orders.CountAsync(cancellationToken),
-                    TotalPages = await _foodAppDbContext.Orders.CountAsync(cancellationToken) / (request.PageSize ?? 50),
+                    TotalCount = count,
+                    TotalPages = count / (request.PageSize ?? 50),
                     TotalAmount = 0
                 };
             }
@@ -39,8 +41,8 @@ namespace FoodApp.Application.Orders.Query.GetOrdersWithPagination
             {
                 PageNumber = request.PageNumber ?? 1,
                 PageSize = request.PageSize ?? 50,
-                TotalCount = await _foodAppDbContext.Orders.CountAsync(cancellationToken),
-                TotalPages = await _foodAppDbContext.Orders.CountAsync(cancellationToken) / (request.PageSize ?? 50),
+                TotalCount = count,
+                TotalPages = count / (request.PageSize ?? 50),
                 Orders = orders,
                 TotalAmount = orders.Sum(o => o.GetTotalPrice())
             };

@@ -119,10 +119,6 @@ namespace FoodApp.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet]
-        public IActionResult Get()
-            => Ok("working");
-
         [HttpPost]
         public async Task<IActionResult> CreateProduct(CreateProductCommand command)
         {
