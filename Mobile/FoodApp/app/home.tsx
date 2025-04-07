@@ -18,6 +18,9 @@ export default function HomeScreen() {
       <Button onPress={() => navigation.navigate('AddOrder')}>
         Add Order
       </Button>
+      <Button onPress={() => navigation.navigate('Orders')}>
+        Orders
+      </Button>
     </View>
   )
 }

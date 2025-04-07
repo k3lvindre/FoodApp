@@ -79,6 +79,7 @@ export default function AddOrder()
       const order = {
         "order" : {
           "customerName": customerName,
+          "dateCreated": new Date().toISOString(),
           "isPaid" : isPaid,
           "orderItems": orderItems
         }
@@ -131,7 +132,7 @@ export default function AddOrder()
               onValueChange={(itemValue) => setCategoryId(itemValue)}
             >
               {categories.map((category) => (
-                <Picker.Item key={category.id} label={category.name} value={category.id} />
+                <Picker.Item key={category.id} label={category.name} value={String(category.id)} />
               ))}
             </Picker>
             <Text style={styles.label}>Product:</Text>
@@ -141,7 +142,7 @@ export default function AddOrder()
               onValueChange={(itemValue) => handleProductChange(itemValue)}
             >
               {products.map((p) => (
-                <Picker.Item key={p.id} label={p.name} value={p.id} />
+                <Picker.Item key={p.id} label={p.name} value={String(p.id)} />
               ))}
             </Picker>
             <Text>Price:</Text>

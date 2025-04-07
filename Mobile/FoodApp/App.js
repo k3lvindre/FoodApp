@@ -4,6 +4,7 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AddProduct from './app/components/products/addproduct';
 import AddOrder from './app/components/orders/addorder';
+import Orders from './app/components/orders/orders';
 import HomeScreen from './app/home';
 
 const RootStack = createNativeStackNavigator(
@@ -17,6 +18,7 @@ const RootStack = createNativeStackNavigator(
         Home: HomeScreen,
         AddProduct: AddProduct,
         AddOrder: AddOrder,
+        Orders: Orders,
     },
 });
 
