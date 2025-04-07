@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, FlatList } from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
+import CheckBox from 'expo-checkbox';
 import { Picker } from '@react-native-picker/picker';
 import { ProductCategory } from '../products/models/common/productCategoryEnum';
 
