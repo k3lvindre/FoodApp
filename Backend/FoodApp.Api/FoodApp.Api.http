@@ -27,6 +27,7 @@ Content-Type: application/json
   "order" : {
     "customerName": "test customer name",
     "isPaid" : true,
+    "dateCreated": "2023-10-10T14:30:00Z",
     "orderItems": [
       {
         "productId": 1,
