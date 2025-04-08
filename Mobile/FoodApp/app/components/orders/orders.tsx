@@ -48,15 +48,15 @@ export default function Orders() {
 
       const response = await fetch(`http://192.168.254.100:5114/api/orders?${queryParams}`);
       const data = await response.json();
-
+      
       if (reset) {
         setOrders(data.orders);
       } else {
         setOrders((prevOrders) => [...prevOrders, ...data.orders]);
       }
 
-      setTotalAmount(data.totalAmount);
-      setHasMore(data.orders.length === pageSize); // If fewer items are returned, no more data
+      setTotalAmount((currentAmount) => currentAmount + data.totalAmount);
+      setHasMore(orders.length + 1 != data.totalCount); // If fewer items are returned, no more data
       setPageNumber((prevPage) => (reset ? 2 : prevPage + 1));
     } catch (error) {
       Alert.alert('Error', 'Failed to fetch orders');
@@ -67,6 +67,7 @@ export default function Orders() {
 
   const renderOrderItem = ({ item }) => (
     <View style={styles.orderItem}>
+      <Text>Order Id: {item.id}</Text>
       <Text>Customer: {item.customerName}</Text>
       <Text>Date: {item.dateCreated}</Text>
       <Text>Paid: {item.isPaid ? 'Yes' : 'No'}</Text>
@@ -101,7 +102,7 @@ export default function Orders() {
         onChangeText={setToDate}
       />
       <Picker
-        mode="dropdown"
+        mode="dialog"
         selectedValue={categoryId}
         style={styles.input}
         onValueChange={(itemValue) => setCategoryId(itemValue)}
@@ -112,7 +113,7 @@ export default function Orders() {
         ))}
       </Picker>
       <Picker
-        mode="dropdown"
+        mode="dialog"
         selectedValue={isPaid}
         style={styles.input}
         onValueChange={(itemValue) => setIsPaid(itemValue)}
@@ -128,18 +129,18 @@ export default function Orders() {
         onChangeText={setCustomerName}
       />
       <Button title="Search" onPress={handleSearch} />
-
       <Text style={styles.label}>Orders</Text>
       <FlatList
         data={orders}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderOrderItem}
-        onEndReached={() => fetchOrders()} // Fetch more data when the end is reached
-        onEndReachedThreshold={0.5} // Trigger when 50% of the list is visible
-        ListFooterComponent={
-          isLoading ? <ActivityIndicator size="large" color="blue" /> : null
-        }
       />
+
+      {hasMore && !isLoading && (
+        <Button title="Load More" onPress={() => fetchOrders()} />
+      )}
+
+      {isLoading && <ActivityIndicator size="large" color="blue" />}
 
       <Text style={styles.totalAmount}>Total Amount: {totalAmount}</Text>
     </View>
