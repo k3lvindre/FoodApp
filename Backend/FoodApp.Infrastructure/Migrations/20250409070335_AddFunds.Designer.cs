@@ -3,6 +3,7 @@ using System;
 using FoodApp.Infrastructure.EntityFrameWork.Dbcontext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FoodApp.Infrastructure.Migrations
 {
     [DbContext(typeof(FoodAppDbContext))]
-    partial class FoodAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250409070335_AddFunds")]
+    partial class AddFunds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -99,7 +102,7 @@ namespace FoodApp.Infrastructure.Migrations
                             b1.Property<decimal>("Value")
                                 .HasPrecision(5)
                                 .HasColumnType("numeric(5)")
-                                .HasColumnName("Amount");
+                                .HasColumnName("Price");
 
                             b1.HasKey("FundId");
 

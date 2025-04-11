@@ -1,4 +1,4 @@
-﻿using FoodApp.Domain.Products;
+﻿using FoodApp.Domain.Core.ValueObjects;
 using FoodApp.Infrastructure.EntityFrameWork.Dbcontext;
 using MediatR;
 

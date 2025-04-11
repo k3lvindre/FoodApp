@@ -1,4 +1,5 @@
-﻿using FoodApp.Shared.Domain;
+﻿using FoodApp.Domain.Core.ValueObjects;
+using FoodApp.Shared.Domain;
 
 namespace FoodApp.Domain.Orders
 {
@@ -7,12 +8,12 @@ namespace FoodApp.Domain.Orders
         public int Id { get; private set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public decimal Price { get; set; }
+        public Amount Price { get; set; }
 
         public OrderItem()
         { }
 
-        internal OrderItem(int productId, int quantity, decimal price)
+        internal OrderItem(int productId, int quantity, Amount price)
         {
             ProductId = productId;
             Quantity = quantity;
@@ -21,7 +22,7 @@ namespace FoodApp.Domain.Orders
 
         public decimal GetTotalPrice()
         {
-            return Quantity * Price;
+            return Quantity * Price.Value;
         }
     }
 }

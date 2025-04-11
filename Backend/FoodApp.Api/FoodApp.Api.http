@@ -32,12 +32,12 @@ Content-Type: application/json
       {
         "productId": 1,
         "quantity": 2,
-        "price": 10.99
+        "price":100.0
       },
       {
         "productId": 2,
         "quantity": 1,
-        "price": 5.49
+        "price": 5.0
       }
     ]
   }

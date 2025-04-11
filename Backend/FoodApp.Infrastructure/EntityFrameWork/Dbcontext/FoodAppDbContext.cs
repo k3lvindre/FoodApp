@@ -1,3 +1,4 @@
+using FoodApp.Domain.Funds;
 using FoodApp.Domain.Orders;
 using FoodApp.Domain.Products;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
         // Define DbSets for your entities
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Fund> Funds { get; set; }
        
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default, bool publishDomainEvent = false)
         {
@@ -37,7 +39,7 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                 {
                     price.Property(p => p.Value).HasColumnName("Price").HasPrecision(5);
                     price.Property(p => p.CurrencyCode).HasColumnName("Currency");
-                }); ;
+                });
             });
 
             // Configure ProductCategory as a value object
@@ -46,6 +48,27 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                 entity.OwnsMany(o => o.OrderItems, (orderItem) =>
                 {
                     orderItem.Property(o => o.Id).HasColumnName("OrderItemId");
+                    orderItem.OwnsOne(o => o.Price, (price) =>
+                    {
+                        price.Property(p => p.Value).HasColumnName("Price").HasPrecision(5);
+                        price.Property(p => p.CurrencyCode).HasColumnName("Currency");
+                    });
+                });
+            });
+
+            // Configure ProductCategory as a value object
+            modelBuilder.Entity<Fund>(entity =>
+            {
+                entity.OwnsOne(f => f.ProductCategory, (category) =>
+                {
+                    category.Property(c => c.Id).HasColumnName("CategoryId");
+                    category.Property(c => c.Name).HasColumnName("CategoryName");
+                });
+
+                entity.OwnsOne(f => f.Amount, (price) =>
+                {
+                    price.Property(p => p.Value).HasColumnName("Amount").HasPrecision(5);
+                    price.Property(p => p.CurrencyCode).HasColumnName("Currency");
                 });
             });
         }

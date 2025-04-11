@@ -12,20 +12,20 @@ namespace FoodApp.Domain.Products
         public int Stock { get; private set; }
 
         // Use for EF core
-        public Product()
+        internal Product()
         { }
 
         public Product(string name, ProductCategory category, Amount price, int stock)
         {
+            // Invariants
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Product name cannot be empty.");
+
             Name = name;
             Category = category;
             Price = price;
             Stock = stock;
-
-            // Invariants
-            if (string.IsNullOrWhiteSpace(Name))
-                throw new ArgumentException("Product name cannot be empty.");
-
+           
             //DomainEvents.Add(new ProductCreatedEvent(Id, Name, Price.Value));
         }
 

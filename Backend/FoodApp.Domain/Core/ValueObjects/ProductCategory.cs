@@ -1,6 +1,6 @@
 ﻿using FoodApp.Shared.Domain;
 
-namespace FoodApp.Domain.Products
+namespace FoodApp.Domain.Core.ValueObjects
 {
     public class ProductCategory : IValueObject
     {
