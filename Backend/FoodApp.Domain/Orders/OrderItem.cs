@@ -5,7 +5,7 @@ namespace FoodApp.Domain.Orders
 {
     public class OrderItem : IValueObject   
     {
-        public int Id { get; private set; }
+        public long Id { get; private set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }
         public Amount Price { get; set; }

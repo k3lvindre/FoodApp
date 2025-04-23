@@ -46,3 +46,13 @@ Content-Type: application/json
 ### GET
 GET {{FoodApp.Api_HostAddress}}/orders?pageNumber=1&pageSize=10
 Accept: application/json
+
+### POST request to create a new fund
+POST {{FoodApp.Api_HostAddress}}/funds
+Content-Type: application/json
+
+{
+  "description": "add fund",
+  "amount" : 50.00,
+  "productCategoryId" : 1
+}

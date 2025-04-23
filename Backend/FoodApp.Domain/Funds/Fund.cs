@@ -5,10 +5,16 @@ namespace FoodApp.Domain.Funds
 {
     public class Fund : IAggregateRoot
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
+
         public string Description { get; set; }
+
         public Amount Amount { get; set; }
-        public DateTime DateCreated { get; set; }
+
+        // we can assign default date unlike in order entity,
+        // this only for experimentation if it will provide default value in database
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+
         public ProductCategory ProductCategory { get; set; }
 
         internal Fund()
@@ -18,7 +24,10 @@ namespace FoodApp.Domain.Funds
             Amount amount,
             ProductCategory productCategory)
         {
-            if(amount.Value <= 0)
+            if (string.IsNullOrWhiteSpace(description))
+                throw new ArgumentException("Description cannot be null or empty.");
+
+            if (amount.Value <= 0)
                 throw new ArgumentException("Amount should be greater than 0.");
 
             Description = description;

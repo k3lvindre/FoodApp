@@ -31,8 +31,7 @@ namespace FoodApp.Application.Orders.Command.CreateOrder
                 }).ToList();
 
             await _foodAppDbContext.Orders.AddAsync(order, cancellationToken);
-            await _foodAppDbContext.SaveEntitiesAsync(cancellationToken);
-            return await Task.FromResult(true);
+            return await _foodAppDbContext.SaveEntitiesAsync(cancellationToken);
         }
     }
 }

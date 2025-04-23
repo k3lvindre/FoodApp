@@ -3,6 +3,9 @@ using System.Reflection;
 
 namespace FoodApp.Application.Common.Mappings
 {
+    /// <summary>
+    /// Automapper is now commercial :)
+    /// </summary>
     internal static class Mapping
     {
         public static T CreateMap<TDto, T>(TDto typeSource, T type)
