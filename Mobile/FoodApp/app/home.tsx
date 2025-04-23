@@ -2,7 +2,6 @@ import * as React from 'react';
 import { View, Text} from 'react-native';
 import { Button } from '@react-navigation/elements';
 import {
-  createStaticNavigation,
   useNavigation,
 } from '@react-navigation/native';
 
@@ -20,6 +19,9 @@ export default function HomeScreen() {
       </Button>
       <Button onPress={() => navigation.navigate('Orders')}>
         Orders
+      </Button>
+      <Button onPress={() => navigation.navigate('AddFund')}>
+        Add Fund
       </Button>
     </View>
   )

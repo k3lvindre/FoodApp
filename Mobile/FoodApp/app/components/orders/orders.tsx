@@ -56,7 +56,7 @@ export default function Orders() {
       }
 
       setTotalAmount((currentAmount) => currentAmount + data.totalAmount);
-      setHasMore(orders.length + 1 != data.totalCount); // If fewer items are returned, no more data
+      setHasMore((prevValue) => orders.length + 1 != data.totalCount); // If fewer items are returned, no more data
       setPageNumber((prevPage) => (reset ? 2 : prevPage + 1));
     } catch (error) {
       Alert.alert('Error', 'Failed to fetch orders');
@@ -74,7 +74,7 @@ export default function Orders() {
       <Text>Items:</Text>
       {item.orderItems.map((orderItem) => (
         <Text key={orderItem.id}>
-          - Product ID: {orderItem.productId}, Quantity: {orderItem.quantity}, Price: {orderItem.price}
+          - Product ID: {orderItem.productId}, Quantity: {orderItem.quantity}, Price: {orderItem.price.value}
         </Text>
       ))}
     </View>

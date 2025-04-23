@@ -37,6 +37,7 @@ export default function AddOrder()
             const response = await fetch(`http://192.168.254.100:5114/api/products?categoryId=${categoryId}`);
             const data = await response.json();
             setProducts(data);
+            setProduct({id: 0, name: ''});
           } catch (error) {
             Alert.alert('Error', 'Failed to fetch products');
           }
@@ -60,7 +61,7 @@ export default function AddOrder()
         };
     
         setOrderItems([...orderItems, orderItem]);
-        setTotalPrice(totalPrice + (price * quantity));
+        setTotalPrice((prevtotalPrice) => prevtotalPrice + (price * quantity));
         setPrice(0);
         Alert.alert('Success', 'Order item added successfully');
     }
@@ -131,6 +132,8 @@ export default function AddOrder()
               style={styles.input}
               onValueChange={(itemValue) => setCategoryId(itemValue)}
             >
+                <Picker.Item label="Select Category" value="" />
+
               {categories.map((category) => (
                 <Picker.Item key={category.id} label={category.name} value={String(category.id)} />
               ))}
@@ -141,6 +144,8 @@ export default function AddOrder()
               style={styles.input}
               onValueChange={(itemValue) => handleProductChange(itemValue)}
             >
+              <Picker.Item label="Select product" value="0" />
+
               {products.map((p) => (
                 <Picker.Item key={p.id} label={p.name} value={String(p.id)} />
               ))}
