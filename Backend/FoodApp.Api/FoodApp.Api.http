@@ -56,3 +56,7 @@ Content-Type: application/json
   "amount" : 50.00,
   "productCategoryId" : 1
 }
+
+### GET
+GET {{FoodApp.Api_HostAddress}}/funds/summary
+Accept: application/json
