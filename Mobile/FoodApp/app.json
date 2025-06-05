@@ -7,6 +7,14 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "94ae54e6-cf2c-4bd0-b861-7b5983bed50c"
+      }
+    },
+    "android": {
+      "package": "com.k3lvindre.FoodApp"
+    }
   }
 }

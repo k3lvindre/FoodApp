@@ -6,6 +6,7 @@ import AddProduct from './app/components/products/addproduct';
 import AddOrder from './app/components/orders/addorder';
 import Orders from './app/components/orders/orders';
 import AddFund from './app/components/funds/addFund';
+import Summary from './app/components/funds/summary';
 import HomeScreen from './app/home';
 
 const RootStack = createNativeStackNavigator(
@@ -21,6 +22,7 @@ const RootStack = createNativeStackNavigator(
         AddOrder: AddOrder,
         Orders: Orders,
         AddFund: AddFund,
+        Summary: Summary,
     },
 });
 

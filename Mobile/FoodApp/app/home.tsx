@@ -23,6 +23,9 @@ export default function HomeScreen() {
       <Button onPress={() => navigation.navigate('AddFund')}>
         Add Fund
       </Button>
+      <Button onPress={() => navigation.navigate('Summary')}>
+        Reports
+      </Button>
     </View>
   )
 }
