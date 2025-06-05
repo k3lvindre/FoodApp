@@ -16,9 +16,9 @@ namespace FoodApp.Application.Products.Query.Categories.GetProductCategories
             _foodAppDbContext = foodAppDbContext;
         }
 
-        public Task<List<Product>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
+        public async Task<List<Product>> Handle(GetProductsByCategoryIdQuery request, CancellationToken cancellationToken)
         {
-            return _foodAppDbContext.Products.Where(p => p.Category.Id == request.categoryId).ToListAsync(cancellationToken);
+            return await _foodAppDbContext.Products.Where(p => p.Category.Id == request.categoryId).ToListAsync(cancellationToken);
         }
     }
 }

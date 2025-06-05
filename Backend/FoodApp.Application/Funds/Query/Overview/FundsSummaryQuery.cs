@@ -13,11 +13,12 @@ namespace FoodApp.Application.Funds.Query.Overview
         public async Task<OverviewResponseDto> Handle(FundsSummaryQuery request, CancellationToken cancellationToken)
         {
             // Get total sales grouped by ProductCategory
-            var totalSalesByCategory =  foodAppDbContext.Orders.AsNoTracking()
+            var allOrderItems = await foodAppDbContext.Orders.AsNoTracking()
                 .SelectMany(o => o.OrderItems)
                 .GroupBy(oi => oi.ProductId)
-                .AsEnumerable()
-                .Select(group => new
+                .ToListAsync(cancellationToken);
+                
+            var totalSalesByCategory = allOrderItems.Select(group => new
                 {
                     ProductCategoryId = foodAppDbContext.Products.Select(x => x.Category.Id).FirstOrDefault(x => x == group.Key),
                     TotalSales = group.Sum(oi => oi.GetTotalPrice())

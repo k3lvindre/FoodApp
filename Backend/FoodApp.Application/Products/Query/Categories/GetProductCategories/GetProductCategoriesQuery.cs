@@ -15,7 +15,7 @@ namespace FoodApp.Application.Products.Query.Categories.GetProductCategories
             _foodAppDbContext = foodAppDbContext;
         }
 
-        public Task<IEnumerable<ProductCategory>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
-            => Task.FromResult(ProductCategory.GetAll());
+        public async Task<IEnumerable<ProductCategory>> Handle(GetProductCategoriesQuery request, CancellationToken cancellationToken)
+            => await Task.FromResult(ProductCategory.GetAll());
     }
 }
