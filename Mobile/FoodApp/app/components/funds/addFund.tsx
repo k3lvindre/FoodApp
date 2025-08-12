@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BASE_URL } from '../../constants/api';
 import { View, Text, Button, Alert, TextInput } from 'react-native';
 import { ProductCategory } from '../products/models/common/productCategoryEnum';
 import { Picker } from '@react-native-picker/picker';
@@ -12,7 +13,7 @@ export default function AddFund() {
     useEffect(() => {
         const fetchCategories = async () => {
           try {
-            const response = await fetch('http://192.168.254.100:5114/api/ProductCategories');
+            const response = await fetch(`${BASE_URL}/ProductCategories`);
             const data = await response.json();
             setCategories(data);
           } catch (error) {
@@ -25,7 +26,7 @@ export default function AddFund() {
 
     const handleAddFund = async () => {
         try {
-          const response = await fetch("http://192.168.254.100:5114/api/funds", {
+          const response = await fetch(`${BASE_URL}/funds`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

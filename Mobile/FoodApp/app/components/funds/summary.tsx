@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { BASE_URL } from '../../constants/api';
 import { View, Text, StyleSheet, Alert } from "react-native";
 
 export default function Summary() {
@@ -27,7 +28,7 @@ export default function Summary() {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const response = await fetch("http://192.168.254.100:5114/api/funds/summary");
+        const response = await fetch(`${BASE_URL}/funds/summary`);
         const data = await response.json();
         setSummary(data);
       } catch (error) {

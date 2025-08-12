@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../constants/api';
 import { View, Text, TextInput, Button, Alert, StyleSheet, FlatList } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { Picker } from '@react-native-picker/picker';
@@ -20,7 +21,7 @@ export default function AddOrder()
     useEffect(() => {
         const fetchCategories = async () => {
           try {
-            const response = await fetch('http://192.168.254.100:5114/api/ProductCategories');
+            const response = await fetch(`${BASE_URL}/ProductCategories`);
             const data = await response.json();
             setCategories(data);
           } catch (error) {
@@ -34,7 +35,7 @@ export default function AddOrder()
     useEffect(() => {
         const fetchProducts = async () => {
           try {
-            const response = await fetch(`http://192.168.254.100:5114/api/products?categoryId=${categoryId}`);
+            const response = await fetch(`${BASE_URL}/products?categoryId=${categoryId}`);
             const data = await response.json();
             setProducts(data);
             setProduct({id: 0, name: ''});
@@ -87,7 +88,7 @@ export default function AddOrder()
       };
     
       try {
-        const response = await fetch('http://192.168.254.100:5114/api/orders', {
+        const response = await fetch(`${BASE_URL}/orders`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

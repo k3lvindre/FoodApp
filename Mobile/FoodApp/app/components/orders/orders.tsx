@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../../constants/api';
 import { View, Text, TextInput, Button, FlatList, Alert, StyleSheet, ActivityIndicator } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
@@ -19,7 +20,7 @@ export default function Orders() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await fetch('http://192.168.254.100:5114/api/ProductCategories');
+        const response = await fetch(`${BASE_URL}/ProductCategories`);
         const data = await response.json();
         setCategories(data);
       } catch (error) {
@@ -46,7 +47,7 @@ export default function Orders() {
         customerName,
       });
 
-      const response = await fetch(`http://192.168.254.100:5114/api/orders?${queryParams}`);
+      const response = await fetch(`${BASE_URL}/orders?${queryParams}`);
       const data = await response.json();
       
       if (reset) {
