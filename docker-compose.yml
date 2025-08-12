@@ -1,0 +1,6 @@
+services:
+  foodapp.api:
+    image: ${DOCKER_REGISTRY-}foodappapi
+    build:
+      context: .
+      dockerfile: Backend/FoodApp.Api/Dockerfile
