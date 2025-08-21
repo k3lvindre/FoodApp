@@ -20,7 +20,7 @@ namespace FoodApp.Application.Funds.Query.Overview
                 
             var totalSalesByCategory = allOrderItems.Select(group => new
                 {
-                    ProductCategoryId = foodAppDbContext.Products.Select(x => x.Category.Id).FirstOrDefault(x => x == group.Key),
+                    ProductCategoryId = foodAppDbContext.Products.FirstOrDefault(x => x.Id == group.Key)?.Category.Id,
                     TotalSales = group.Sum(oi => oi.GetTotalPrice())
                 });
 
