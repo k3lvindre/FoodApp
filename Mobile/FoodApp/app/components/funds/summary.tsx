@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BASE_URL } from '../../constants/api';
-import { View, Text, StyleSheet, Alert } from "react-native";
+import { View, Text, StyleSheet, Alert, ScrollView, ActivityIndicator } from "react-native";
 
 export default function Summary() {
   const [summary, setSummary] = useState(null);
@@ -41,39 +41,153 @@ export default function Summary() {
 
   if (!summary) {
     return (
-      <View style={styles.container}>
-        <Text>Loading summary...</Text>
+      <View style={[styles.container, styles.loadingContainer]}>
+        <ActivityIndicator size="large" color="#1976d2" />
+        <Text style={styles.loadingText}>Loading summary...</Text>
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Funds Summary</Text>
-      <Text>Total Chizlog Funds: {summary.totalChizlogFunds}</Text>
-      <Text>Total GCash Funds: {summary.totalGcashFunds}</Text>
-      <Text>Total Print Funds: {summary.totalPrintFunds}</Text>
-      <Text>Total Chizlog Sales: {summary.totalChizlogSales}</Text>
-      <Text>Total GCash Sales: {summary.totalGcashSales}</Text>
-      <Text>Total Print Sales: {summary.totalPrintSales}</Text>
-      <Text>Total Chizlog Revenue: {summary.totalChizlogRevenue}</Text>
-      <Text>Total GCash Revenue: {summary.totalGcashRevenue}</Text>
-      <Text>Total Print Revenue: {summary.totalPrintRevenue}</Text>
-      <Text>Total Sales: {summary.totalSales}</Text>
-      <Text>Total Funds: {summary.totalFunds}</Text>
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Funds Summary</Text>
+
+        <View style={styles.cardSection}>
+          <Text style={styles.sectionTitle}>Funds</Text>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Chizlog Funds:</Text>
+            <Text style={styles.value}>${summary.totalChizlogFunds.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>GCash Funds:</Text>
+            <Text style={styles.value}>${summary.totalGcashFunds.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Print Funds:</Text>
+            <Text style={styles.value}>${summary.totalPrintFunds.toFixed(2)}</Text>
+          </View>
+          <View style={[styles.summaryItem, styles.totalItem]}>
+            <Text style={styles.totalLabel}>Total Funds:</Text>
+            <Text style={styles.totalValue}>${summary.totalFunds.toFixed(2)}</Text>
+          </View>
+        </View>
+
+        <View style={styles.cardSection}>
+          <Text style={styles.sectionTitle}>Sales</Text>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Chizlog Sales:</Text>
+            <Text style={styles.value}>${summary.totalChizlogSales.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>GCash Sales:</Text>
+            <Text style={styles.value}>${summary.totalGcashSales.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Print Sales:</Text>
+            <Text style={styles.value}>${summary.totalPrintSales.toFixed(2)}</Text>
+          </View>
+          <View style={[styles.summaryItem, styles.totalItem]}>
+            <Text style={styles.totalLabel}>Total Sales:</Text>
+            <Text style={styles.totalValue}>${summary.totalSales.toFixed(2)}</Text>
+          </View>
+        </View>
+
+        <View style={styles.cardSection}>
+          <Text style={styles.sectionTitle}>Revenue</Text>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Chizlog Revenue:</Text>
+            <Text style={styles.value}>${summary.totalChizlogRevenue.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>GCash Revenue:</Text>
+            <Text style={styles.value}>${summary.totalGcashRevenue.toFixed(2)}</Text>
+          </View>
+          <View style={styles.summaryItem}>
+            <Text style={styles.label}>Print Revenue:</Text>
+            <Text style={styles.value}>${summary.totalPrintRevenue.toFixed(2)}</Text>
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: "#fff",
+    alignItems: 'center',
   },
-  header: {
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 200,
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#666',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1976d2',
+    marginBottom: 24,
+    textAlign: 'center',
+    width: '100%',
+  },
+  cardSection: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 24,
+    elevation: 2,
+    width: '100%',
+    maxWidth: 480,
+  },
+  sectionTitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    color: '#333',
     marginBottom: 16,
+  },
+  summaryItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  label: {
+    fontSize: 16,
+    color: '#666',
+  },
+  value: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+  totalItem: {
+    marginTop: 8,
+    borderBottomWidth: 0,
+    paddingTop: 16,
+    borderTopWidth: 2,
+    borderTopColor: '#eee',
+  },
+  totalLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  totalValue: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1976d2',
   },
 });

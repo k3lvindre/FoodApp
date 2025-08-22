@@ -4,3 +4,5 @@ services:
     build:
       context: .
       dockerfile: Backend/FoodApp.Api/Dockerfile
+    ports:
+      - "58845:8080"

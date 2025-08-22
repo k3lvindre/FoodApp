@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BASE_URL } from '../../constants/api';
-import { View, Text, TextInput, Button, Alert, StyleSheet, FlatList } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, FlatList, ScrollView } from 'react-native';
 import CheckBox from 'expo-checkbox';
 import { Picker } from '@react-native-picker/picker';
 import { ProductCategory } from '../products/models/common/productCategoryEnum';
@@ -119,110 +119,256 @@ export default function AddOrder()
     }
 
     return (
-        <View style={styles.container}>
-            <Text>Add Order</Text>
-            <TextInput
-                  placeholder='Enter customer name'
-                  style={styles.input}
-                  value={customerName}
-                  onChangeText={setCustomerName}
-                />
-            <Text style={styles.label}>Category:</Text>
-            <Picker
-              selectedValue={categoryId}
-              style={styles.input}
-              onValueChange={(itemValue) => setCategoryId(itemValue)}
-            >
-                <Picker.Item label="Select Category" value="" />
+        <ScrollView style={styles.scrollView}>
+            <View style={styles.container}>
+                <Text style={styles.headerText}>Add Order</Text>
+                
+                <View style={styles.formSection}>
+                    <Text style={styles.label}>Customer Name</Text>
+                    <TextInput
+                        placeholder='Enter customer name'
+                        style={styles.input}
+                        value={customerName}
+                        onChangeText={setCustomerName}
+                        placeholderTextColor="#666"
+                    />
+                    
+                    <Text style={styles.label}>Category</Text>
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={categoryId}
+                            style={styles.picker}
+                            onValueChange={(itemValue) => setCategoryId(itemValue)}
+                            mode="dropdown"
+                        >
+                            <Picker.Item label="Select Category" value="" />
+                            {categories.map((category) => (
+                                <Picker.Item key={category.id} label={category.name} value={String(category.id)} />
+                            ))}
+                        </Picker>
+                    </View>
+                    
+                    <Text style={styles.label}>Product</Text>
+                    <View style={styles.pickerContainer}>
+                        <Picker
+                            selectedValue={product.id}
+                            style={styles.picker}
+                            onValueChange={(itemValue) => handleProductChange(itemValue)}
+                            mode="dropdown"
+                        >
+                            <Picker.Item label="Select product" value="0" />
+                            {products.map((p) => (
+                                <Picker.Item key={p.id} label={p.name} value={String(p.id)} />
+                            ))}
+                        </Picker>
+                    </View>
+                    
+                    <Text style={styles.label}>Price</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter price"
+                        value={String(price)}
+                        onChangeText={(text) => setPrice(Number(text))}
+                        keyboardType="numeric"
+                        placeholderTextColor="#666"
+                    />
+                    
+                    <Text style={styles.label}>Quantity</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Enter quantity"
+                        value={String(quantity)}
+                        onChangeText={(text) => setQuantity(Number(text))}
+                        keyboardType="numeric"
+                        placeholderTextColor="#666"
+                    />
+                    
+                    <TouchableOpacity style={styles.primaryButton} onPress={handleAddOrderItems}>
+                        <Text style={styles.buttonText}>Add Order Item</Text>
+                    </TouchableOpacity>
+                    
+                    <View style={styles.checkboxContainer}>
+                        <CheckBox
+                            value={isPaid}
+                            onValueChange={setIsPaid}
+                            style={styles.checkbox}
+                        />
+                        <Text style={styles.checkboxLabel}>Is Paid</Text>
+                    </View>
+                </View>
 
-              {categories.map((category) => (
-                <Picker.Item key={category.id} label={category.name} value={String(category.id)} />
-              ))}
-            </Picker>
-            <Text style={styles.label}>Product:</Text>
-            <Picker
-              selectedValue={product.id}
-              style={styles.input}
-              onValueChange={(itemValue) => handleProductChange(itemValue)}
-            >
-              <Picker.Item label="Select product" value="0" />
-
-              {products.map((p) => (
-                <Picker.Item key={p.id} label={p.name} value={String(p.id)} />
-              ))}
-            </Picker>
-            <Text>Price:</Text>
-            <TextInput
-                    style={styles.input}
-                    placeholder="Enter price"
-                    value={String(price)}
-                    onChangeText={(text) => setPrice(Number(text))}
-                    keyboardType="numeric"
-                  />
-            <TextInput
-                style={styles.input}
-                placeholder="Enter quantity"
-                value={String(quantity)}
-                onChangeText={(text) => setQuantity(Number(text))}
-                keyboardType="numeric"
-            />
-            <Button title='Add Order' onPress={handleAddOrderItems} />
-            <View style={styles.checkboxContainer}>
-              <CheckBox
-                value={isPaid}
-                onValueChange={setIsPaid}
-              />
-              <Text style={styles.label}>Is Paid</Text>
+                <View style={styles.orderSection}>
+                    <Text style={styles.sectionTitle}>Order Items</Text>
+                    <FlatList
+                        data={orderItems}
+                        keyExtractor={(item) => item.productId.toString()}
+                        renderItem={({ item }) => (
+                            <View style={styles.orderItem}>
+                                <Text style={styles.orderItemText}>Product: {item.productName}</Text>
+                                <Text style={styles.orderItemText}>Quantity: {item.quantity}</Text>
+                                <Text style={styles.orderItemText}>Price: ${item.price.toFixed(2)}</Text>
+                            </View>
+                        )}
+                        style={styles.orderList}
+                    />
+                    
+                    <Text style={styles.totalPrice}>Total Price: ${totalPrice.toFixed(2)}</Text>
+                    
+                    <View style={styles.buttonGroup}>
+                        <TouchableOpacity style={styles.secondaryButton} onPress={ClearOrder}>
+                            <Text style={styles.secondaryButtonText}>Clear Order</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.primaryButton} onPress={PlaceOrder}>
+                            <Text style={styles.buttonText}>Place Order</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
-            <FlatList
-                data={orderItems}
-                keyExtractor={(item) => item.productId.toString()}
-                renderItem={({ item }) => (
-                  <View style={styles.row}>
-                    <Text style={styles.cell}>Product: {item.productName}</Text>
-                    <Text style={styles.cell}>Quantity: {item.quantity}</Text>
-                    <Text style={styles.cell}>Price: {item.price}</Text>
-                  </View>
-                )} />
-            <Text>Total Price: {totalPrice}</Text>
-            <Button title='Clear Order' onPress={ClearOrder} />
-            <Button title='Place Order' onPress={PlaceOrder} />
-        </View>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     padding: 16,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  headerText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1976d2',
+    marginBottom: 24,
+    textAlign: 'center',
+    width: '100%',
+  },
+  formSection: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 24,
+    elevation: 2,
+    width: '100%',
+    maxWidth: 480,
+  },
+  orderSection: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 24,
+    elevation: 2,
+    width: '100%',
+    maxWidth: 480,
   },
   label: {
-    marginBottom: 8,
+    fontSize: 16,
     fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+    marginTop: 16,
   },
   input: {
-    height: 40,
-    borderColor: 'gray',
+    backgroundColor: '#fff',
     borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    padding: 12,
+    fontSize: 16,
+    color: '#333',
     marginBottom: 16,
-    paddingHorizontal: 8,
+  },
+  pickerContainer: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    width: '100%',
+  },
+  primaryButton: {
+    backgroundColor: '#1976d2',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    marginVertical: 8,
+    elevation: 2,
+    flex: 1,
+    minHeight: 54,
+  },
+  secondaryButton: {
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    padding: 16,
+    alignItems: 'center',
+    marginVertical: 8,
+    borderWidth: 1,
+    borderColor: '#1976d2',
+    elevation: 2,
+    flex: 1,
+    minHeight: 54,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  secondaryButtonText: {
+    color: '#1976d2',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginVertical: 16,
+  },
+  checkbox: {
+    marginRight: 8,
+  },
+  checkboxLabel: {
+    fontSize: 16,
+    color: '#333',
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#333',
     marginBottom: 16,
   },
-  row: {
+  orderItem: {
+    backgroundColor: '#f8f9fa',
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 8,
+  },
+  orderItemText: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 4,
+  },
+  orderList: {
+    maxHeight: 200,
+    marginBottom: 16,
+  },
+  totalPrice: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#1976d2',
+    marginVertical: 16,
+    textAlign: 'right',
+  },
+  buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: 'gray',
-  },
-  cell: {
-    flex: 1,
-    textAlign: 'center',
+    marginTop: 16,
+    gap: 16,
   },
 });
