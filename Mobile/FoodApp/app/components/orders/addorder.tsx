@@ -47,13 +47,19 @@ export default function AddOrder()
         fetchProducts();
       }, [categoryId]);
 
-    
+    const handleDeleteOrderItems = async (index : number) => {
+      const newOrderItems = [...orderItems];
+      const [removedItem] = newOrderItems.splice(index, 1);
+      setOrderItems(newOrderItems);
+      setTotalPrice((prevtotalPrice) => prevtotalPrice - (removedItem.price * removedItem.quantity));
+    }
+
     const handleAddOrderItems = async () => {
         if (!categoryId || !product.id || !price) {
             Alert.alert('Error', 'All fields are required');
             return;
         }
-    
+        
         const orderItem = {
           productId: product.id,
           quantity: quantity,
@@ -106,7 +112,7 @@ export default function AddOrder()
       }
     }
 
-    const handleProductChange = async (id) => {
+    const handleProductChange = async (id: number) => {
       const selectedProduct = products.find((p) => p.id == id);
       if (!selectedProduct) return;
       setPrice(selectedProduct.price.value);
@@ -202,11 +208,14 @@ export default function AddOrder()
                     <FlatList
                         data={orderItems}
                         keyExtractor={(item) => item.productId.toString()}
-                        renderItem={({ item }) => (
+                        renderItem={({ item, index }) => (
                             <View style={styles.orderItem}>
                                 <Text style={styles.orderItemText}>Product: {item.productName}</Text>
                                 <Text style={styles.orderItemText}>Quantity: {item.quantity}</Text>
                                 <Text style={styles.orderItemText}>Price: ${item.price.toFixed(2)}</Text>
+                                <TouchableOpacity style={styles.primaryButton} onPress={() => handleDeleteOrderItems(index)}>
+                                    <Text style={styles.buttonText}>Delete</Text>
+                                </TouchableOpacity>
                             </View>
                         )}
                         style={styles.orderList}
