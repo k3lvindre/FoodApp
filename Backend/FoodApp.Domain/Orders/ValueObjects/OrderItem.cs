@@ -1,14 +1,14 @@
 ﻿using FoodApp.Domain.Core.ValueObjects;
 using FoodApp.Shared.Domain;
 
-namespace FoodApp.Domain.Orders
+namespace FoodApp.Domain.Orders.ValueObjects
 {
     public class OrderItem : IValueObject   
     {
         public long Id { get; private set; }
-        public int ProductId { get; set; }
-        public int Quantity { get; set; }
-        public Amount Price { get; set; }
+        public int ProductId { get; set; } = 0;
+        public int Quantity { get; set; } = 1;
+        public Amount Price { get; set; } = default!;
 
         public OrderItem()
         { }

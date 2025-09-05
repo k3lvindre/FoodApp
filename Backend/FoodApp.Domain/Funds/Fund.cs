@@ -5,22 +5,20 @@ namespace FoodApp.Domain.Funds
 {
     public class Fund : IAggregateRoot
     {
-        public long Id { get; set; }
+        public long Id { get; private set; }
 
-        public string Description { get; set; }
+        public string Description { get; private set; } = string.Empty;
 
-        public Amount Amount { get; set; }
+        public Amount Amount { get; private set; } = default!;
 
-        // we can assign default date unlike in order entity,
-        // this only for experimentation if it will provide default value in database
         public DateTime DateCreated { get; set; } = DateTime.UtcNow;
 
-        public ProductCategory ProductCategory { get; set; }
+        public ProductCategory ProductCategory { get; private set; } = default!;
 
-        internal Fund()
+        public Fund()
         { }
 
-        public Fund(string description, 
+        public Fund(string description,
             Amount amount,
             ProductCategory productCategory)
         {

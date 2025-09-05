@@ -8,7 +8,9 @@ namespace FoodApp.Application.Orders.DataTransferObjects
         public bool IsPaid { get; set; }
         public DateTime DateCreated { get; set; }
         [NotMapped]
-        public List<OrderItemDto> OrderItems { get; set; }
+        public List<OrderItemDto> OrderItems { get; set; } = [];
+        public int OrderStatusId { get; set; }
+        public int OrderTypeId { get; set; }
     }
     
     public record OrderItemDto(

@@ -6,9 +6,9 @@ namespace FoodApp.Domain.Products
     public class Product : IAggregateRoot
     {
         public int Id { get; private set; }
-        public string Name { get; private set; }
-        public ProductCategory Category { get; private set; }
-        public Amount Price { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public ProductCategory Category { get; private set; } = default!;
+        public Amount Price { get; private set; } = default!;
         public int Stock { get; private set; }
 
         // Use for EF core

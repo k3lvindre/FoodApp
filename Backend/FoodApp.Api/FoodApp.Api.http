@@ -1,4 +1,4 @@
-@FoodApp.Api_HostAddress = http://192.168.254.100:5114/api
+@FoodApp.Api_HostAddress = http://localhost:58845/api
 
 ### GET
 GET {{FoodApp.Api_HostAddress}}/ProductCategories/1/products

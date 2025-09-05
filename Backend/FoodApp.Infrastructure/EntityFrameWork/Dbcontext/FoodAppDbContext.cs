@@ -26,9 +26,9 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure ProductCategory as a value object
             modelBuilder.Entity<Product>(entity =>
             {
+                // Configure ProductCategory as a value object
                 entity.OwnsOne(p => p.Category, (category) =>
                 {
                     category.Property(c => c.Id).HasColumnName("CategoryId");
@@ -42,7 +42,6 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                 });
             });
 
-            // Configure ProductCategory as a value object
             modelBuilder.Entity<Order>(entity =>
             {
                 entity.OwnsMany(o => o.OrderItems, (orderItem) =>
@@ -54,9 +53,20 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                         price.Property(p => p.CurrencyCode).HasColumnName("Currency");
                     });
                 });
+
+                entity.OwnsOne(o => o.OrderType, (type) =>
+                {
+                    type.Property(p => p.Id).HasColumnName("OrderTypeId").HasPrecision(5);
+                    type.Property(p => p.Name).HasColumnName("OrderTypeName").HasPrecision(5);
+                });
+
+                entity.OwnsOne(o => o.OrderStatus, (status) =>
+                {
+                    status.Property(p => p.Id).HasColumnName("OrderStatusId").HasPrecision(5);
+                    status.Property(p => p.Name).HasColumnName("OrderStatusName").HasPrecision(5);
+                });
             });
 
-            // Configure ProductCategory as a value object
             modelBuilder.Entity<Fund>(entity =>
             {
                 entity.OwnsOne(f => f.ProductCategory, (category) =>
