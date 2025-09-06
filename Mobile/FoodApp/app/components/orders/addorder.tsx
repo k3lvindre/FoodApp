@@ -4,6 +4,8 @@ import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, FlatList, S
 import CheckBox from 'expo-checkbox';
 import { Picker } from '@react-native-picker/picker';
 import { ProductCategory } from '../products/models/common/productCategoryEnum';
+import { OrderStatus } from '../orders/models/common/orderStatusEnum';
+import { OrderType } from '../orders/models/common/orderTypeEnum';
 
 export default function AddOrder() 
 {
@@ -17,7 +19,8 @@ export default function AddOrder()
     const [categoryId, setCategoryId] = useState(ProductCategory.Chizlog);
     const [product, setProduct] = useState({id : 0, name: ''});
     const [totalPrice, setTotalPrice] = useState(0.00);
-    
+    const [orderType, setOrderType] = useState(OrderType.DineIn);
+
     useEffect(() => {
         const fetchCategories = async () => {
           try {
@@ -89,6 +92,8 @@ export default function AddOrder()
           "customerName": customerName,
           "dateCreated": new Date().toISOString(),
           "isPaid" : isPaid,
+          "orderStatusId" : OrderStatus.Preparing,
+          "orderTypeId" : orderType,
           "orderItems": orderItems
         }
       };
@@ -139,6 +144,27 @@ export default function AddOrder()
                         placeholderTextColor="#666"
                     />
                     
+                    <Text style={styles.label}>Order Type</Text>
+                    <View style={styles.radioContainer}>
+                        <TouchableOpacity
+                            style={styles.radioOption}
+                            onPress={() => setOrderType(OrderType.DineIn)}
+                        >
+                            <View style={[
+                                styles.radioButton,
+                                orderType === OrderType.DineIn && styles.radioButtonSelected
+                            ]} />
+                            <Text style={styles.radioText}>Dine In</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.radioOption}
+                            onPress={() => setOrderType(OrderType.TakeOut)}
+                        >
+                            v
+                            <Text style={styles.radioText}>Take Out</Text>
+                        </TouchableOpacity>
+                    </View>
+
                     <Text style={styles.label}>Category</Text>
                     <View style={styles.pickerContainer}>
                         <Picker
@@ -351,6 +377,30 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 16,
+  },
+  radioContainer: {
+    flexDirection: 'row',
+    marginBottom: 16,
+  },
+  radioOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 24,
+  },
+  radioButton: {
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#1976d2',
+    marginRight: 8,
+  },
+  radioButtonSelected: {
+    backgroundColor: '#1976d2',
+  },
+  radioText: {
+    fontSize: 16,
+    color: '#333',
   },
   orderItem: {
     backgroundColor: '#f8f9fa',
