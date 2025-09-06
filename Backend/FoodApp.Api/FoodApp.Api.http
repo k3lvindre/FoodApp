@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 
-### POST request to create a new product
+### POST request to create a new product  
 POST {{FoodApp.Api_HostAddress}}/orders/
 Content-Type: application/json
 
@@ -28,6 +28,8 @@ Content-Type: application/json
     "customerName": "test customer name",
     "isPaid" : true,
     "dateCreated": "2023-10-10T14:30:00Z",
+    "orderStatusId" : 1,
+    "orderTypeId" : 1,
     "orderItems": [
       {
         "productId": 1,
