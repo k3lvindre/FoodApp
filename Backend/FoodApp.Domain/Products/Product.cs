@@ -12,7 +12,7 @@ namespace FoodApp.Domain.Products
         public int Stock { get; private set; }
 
         // Use for EF core
-        internal Product()
+        private Product()
         { }
 
         public Product(string name, ProductCategory category, Amount price, int stock)

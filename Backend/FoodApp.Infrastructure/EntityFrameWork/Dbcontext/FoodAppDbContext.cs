@@ -1,4 +1,5 @@
 using FoodApp.Domain.Funds;
+using FoodApp.Domain.Inventory;
 using FoodApp.Domain.Orders;
 using FoodApp.Domain.Products;
 using Microsoft.EntityFrameworkCore;
@@ -80,6 +81,18 @@ namespace FoodApp.Infrastructure.EntityFrameWork.Dbcontext
                     price.Property(p => p.Value).HasColumnName("Amount").HasPrecision(5);
                     price.Property(p => p.CurrencyCode).HasColumnName("Currency");
                 });
+            });
+
+            modelBuilder.Entity<Inventory>(entity =>
+            {
+                entity.OwnsOne(i => i.Unit, (unit) =>
+                {
+                    unit.Property(u => u.Id).HasColumnName("UnitId");
+                    unit.Property(u => u.Name).HasColumnName("UnitName");
+                });
+
+                // Add unique constraint on Name
+                entity.HasIndex(i => i.Name).IsUnique();
             });
         }
     }

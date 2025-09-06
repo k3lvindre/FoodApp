@@ -15,7 +15,7 @@ namespace FoodApp.Domain.Funds
 
         public ProductCategory ProductCategory { get; private set; } = default!;
 
-        public Fund()
+        private Fund()
         { }
 
         public Fund(string description,
